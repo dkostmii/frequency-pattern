@@ -13,18 +13,24 @@ function drawRotated(image,degrees, blend){
     context.drawImage(image,-image.width/2,-image.height/2);
 }
 
-function init(iter, angle, offset, jitter) {
-    console.log(iter, angle, offset,jitter);
+function init(iter, angle, offset, jitter, scaling) {
     var c = document.getElementsByClassName("image")[0];
     var ctx = c.getContext("2d");
-     console.log(iter, angle, offset,jitter);
     if (typeof iter === "undefined") iter = 1024;
     if (typeof angle === "undefined") angle = 22;
     if (typeof offset === "undefined") offset = 32;
     if (typeof jitter === "undefined") jitter = 2;
+    if (typeof scaling === "undefined") scaling = 1;
+    if (scaling > 8) scaling = 8;
+    else if (scaling < 0.5) scaling = 0.5;
+    scaling = Math.abs(scaling);
+    document.getElementById("scale").value = scaling;
     
-    c.width = 384;
-    c.height = 480;
+    iter*=scaling;
+    offset*=scaling;
+    jitter*=scaling;
+    c.width = 384*scaling;
+    c.height = 480*scaling;
     ctx.fillStyle = "white";
     draw(iter,1,0,offset,jitter);
     var img = new Image();
@@ -38,7 +44,9 @@ function currInit(initFun) {
 	return function(b) {
 	    return function (c) {
 		return function (d) {
-		    return initFun(a,b,c,d);
+		    return function (sc) {
+			return initFun(a,b,c,d,sc);
+		    };
 		};
 	    };
 	};
@@ -61,6 +69,5 @@ function initParams() {
     var current=currInit(init);
     for (let i = 0; i < inputs.length; i++) {
 	current=current(inputs[i].value);
-	console.log(current);
     }
 }
