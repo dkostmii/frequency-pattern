@@ -6,13 +6,22 @@
   </head>
   <body>
     <canvas class="image"></canvas>
-    <div class="inputs-container"> 
+    <div>
+      <form class="inputs-container" novalidate>
       <label>Iterations<input type="number" class="num-input" value=1024 ></label>
       <label>Angle<input type="number" class="num-input" value=22 ></label>
-      <label>Offset<input type="number" class="num-input" value=32 ></label>
-      <label>Jitter<input type="number" class="num-input" value=2 ></label>
-      <label>Image scale (8 max)<input type="number" id="scale" class="num-input" value=1 ></label>
+      <label class="btn-transparent" onclick="toggleView()">Show more</label>
+      <label class="advanced" hidden>Offset<input type="number" class="num-input num-input-small" placeholder="-X" value=32 ><input type="number" placeholder="Y" class="num-input num-input-small" value=0 ></label>
+      <label class="advanced" hidden>Jitter<input type="number" class="num-input" value=2 ></label>
+      <label class="advanced" hidden>Scale<input type="number" id="scale" placeholder="0.5...8" class="num-input" value=1 ></label>
+      <label id="randomize" class="btn-transparent" hidden>Randomize selected</label>
+      <label class="btn-transparent" onclick="toggleView()" hidden>Show less</label>
+      </form>
     </div>
-      <button class="btn" onclick="initParams()">Draw</button>
+    <div class="btn-container">
+      <button class="btn btn-control" onclick="initParams()">Draw</button>
+      <button class="btn btn-control" onclick="randomize()">Randomize all</button>
+      <a id="link" onclick="save()">Save</a>
+    </div>
   </body>
 </html>
