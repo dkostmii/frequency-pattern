@@ -3,10 +3,11 @@
   <head>
     <link rel="stylesheet" href="style.css">
     <script src="main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
     <canvas class="image"></canvas>
-    <div>
+    <div class="controls">
       <form class="inputs-container" novalidate>
       <label>Iterations<input type="number" class="num-input" value=1024 ></label>
       <label>Angle<input type="number" class="num-input" value=22 ></label>
@@ -15,13 +16,14 @@
       <label class="advanced" hidden>Jitter<input type="number" class="num-input" value=2 ></label>
       <label class="advanced" hidden>Scale<input type="number" id="scale" placeholder="0.5...8" class="num-input" value=1 ></label>
       <label id="randomize" class="btn-transparent" hidden>Randomize selected</label>
+      <label class="btn-transparent" hidden><input type="checkbox" id="redraw" checked>Redraw</label>
       <label class="btn-transparent" onclick="toggleView()" hidden>Show less</label>
       </form>
-    </div>
     <div class="btn-container">
       <button class="btn btn-control" onclick="initParams()">Draw</button>
       <button class="btn btn-control" onclick="randomize()">Randomize all</button>
       <a id="link" onclick="save()">Save</a>
+    </div>
     </div>
   </body>
 </html>

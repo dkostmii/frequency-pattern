@@ -2,7 +2,7 @@ body {
     background: black;
     color: #EEEEEE;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 96vh;
@@ -10,8 +10,15 @@ body {
 }
 
 .image {
-    width: 384px;
-    height: 480px;
+    width: 576px;
+    height: 720px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2vw;
 }
 
 .btn-container {
@@ -75,20 +82,30 @@ label::selection {
     transform: scale(1.2);
 }
 
-a:visited {
+#link:hover {
+    opacity: 84%;
+}
+
+#link:visited {
+    color: #EEEEEE;
+}
+#link:link {
     color: #EEEEEE;
 }
 
-@media screen and (max-width:360px) {
+@media screen and (max-width:414px) {
     body {
 	height: 120vh;
+	flex-direction: column;
 	gap: 24px;
     }
-    .image {
-	width: 90vw;
+    .image-wrap {
+	width: 96vw;
 	height: auto;
     }
-
+    #link {
+	font-size: 12pt;
+    }
     .btn {
 	font-size: 12pt;
     }
@@ -107,8 +124,15 @@ a:visited {
 	font-size: 12pt;
     }
 
-    .inputs-container {
+    .controls {
 	align-items: center;
     }
     
+}
+
+@media screen and (max-width: 1024px) {
+    .image {
+	width: 384px;
+	height: 480px;
+    }
 }

@@ -8,8 +8,10 @@ window.onload = () => {
     }
 }
 
-function drawRotated(image,degrees, blend){
-    var canvas = document.getElementsByClassName("image")[0];
+function drawRotated(image,degrees,blend,canvas){
+    if (typeof canvas === "undefined") {
+	canvas = document.getElementsByClassName("image")[0];
+    }
     var context = canvas.getContext("2d");
     context.translate(canvas.width/2,canvas.height/2);
     context.rotate(degrees*Math.PI/180);
@@ -17,21 +19,47 @@ function drawRotated(image,degrees, blend){
 	context.globalCompositeOperation = blend;
     }
     context.drawImage(image,-image.width/2,-image.height/2);
+    context.save();
 }
 
-function draw(max, iter, startY, offset, jitter) {
-    var c = document.getElementsByClassName("image")[0];
+function draw(max, iter, startY, offset, jitter, c) {
+    if (typeof c === "undefined") {
+	c = document.getElementsByClassName("image")[0];
+    }  
     var ctx = c.getContext("2d");
+    var blendMode = document.getElementById("redraw").checked == true ? "normal" : "difference";
+    ctx.globalCompositeOperation = blendMode;
     while (iter <= max) {
 	var height = 48*(iter/max);
-	ctx.fillRect(0,startY,c.width-jitter*Math.random()-offset, height);
+	ctx.fillRect(offset < 0 ? -offset : 0,startY,c.width-jitter*Math.random()-offset, height);
 	iter++;
 	startY=startY+(2*(1-iter/max))*height;
     }
 }
 
 function init(iter, angle, offset, offsetY, jitter, scaling) {
-    var c = document.getElementsByClassName("image")[0];
+    var c, display;
+    if (document.getElementById("redraw").checked) {
+	c = document.getElementsByClassName("image")[0];
+    }
+    else {
+	c = document.createElement("canvas");
+	c.setAttribute("class", "hiddenImage");
+    }
+
+    var media = window.matchMedia("(max-width: 414px)");
+    if (media.matches) {
+	c.hidden = true;
+	display=document.getElementsByClassName("image-wrap")[0];
+	if (typeof display  === "undefined") {
+	    display=document.createElement("img");
+	    display.setAttribute("class", "image-wrap");
+	    display.width=92*window.innerWidth;
+	    display.height=1.25*display.width;
+	    document.body.prepend(display);
+	}
+    }
+    
     var ctx = c.getContext("2d");
     if (typeof iter === "undefined") iter = 1024;
     if (typeof angle === "undefined") angle = 22;
@@ -50,11 +78,31 @@ function init(iter, angle, offset, offsetY, jitter, scaling) {
     c.width = 384*scaling;
     c.height = 480*scaling;
     ctx.fillStyle = "white";
-    draw(iter,1,offsetY,offset,jitter);
+    draw(iter,1,offsetY,offset,jitter,c);
     var img = new Image();
     img.src = c.toDataURL();
     img.onload = () => {
-	drawRotated(img, angle ,"difference");
+	drawRotated(img, angle ,"difference",c);
+	if (!document.getElementById("redraw").checked) {
+	    canvas = document.getElementsByClassName("image")[0];
+	    context = canvas.getContext("2d");
+	    context.resetTransform();
+	    context.globalCompositeOperation = "difference";
+	    var image = new Image();
+	    image.src = c.toDataURL();
+	    image.onload = () => {
+		context.drawImage(image, 0,0);
+	    };
+	    c.remove();
+	    if (media.matches) {
+		display.src = canvas.toDataURL();
+	    }
+	}
+	else {
+	    if (media.matches) {
+		display.src = c.toDataURL();
+	    }
+	}
     };
 }
 
