@@ -171,6 +171,14 @@ function toggleView() {
     for (let i = 0; i<inputs.length; i++) {
 	inputs[i].hidden = !inputs[i].hidden;
     }
+    if (window.matchMedia("(max-width: 414px)").matches) {
+	if (inputs[0].hidden) {
+	    document.body.style.setProperty("height", "106vh");
+	}
+	else {
+	    document.body.style.setProperty("height", "125vh");
+	}
+    }
 }
 
 function rndSelect(id) {

@@ -95,7 +95,7 @@ label::selection {
 
 @media screen and (max-width:414px) {
     body {
-	height: 120vh;
+	height: 106vh;
 	flex-direction: column;
 	gap: 24px;
     }
