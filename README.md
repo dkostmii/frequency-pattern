@@ -1,2 +1,4 @@
 # frequency-pattern
-Horizontal rectangles pattern with 4 params
+Repeating horizontal rectangles pattern generator with blending. Useful to make assets for artworks.
+
+![screenshot](screen.png "Screenshot")

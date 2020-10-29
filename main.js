@@ -61,12 +61,12 @@ function init(iter, angle, offset, offsetY, jitter, scaling) {
     }
     
     var ctx = c.getContext("2d");
-    if (typeof iter === "undefined") iter = 1024;
-    if (typeof angle === "undefined") angle = 22;
-    if (typeof offset === "undefined") offset = 32;
-    if (typeof offsetY === "undefined") offsetY = 0;
-    if (typeof jitter === "undefined") jitter = 2;
-    if (typeof scaling === "undefined") scaling = 1;
+    if (typeof iter === "undefined") iter = 256;
+    if (typeof angle === "undefined") angle = 174;
+    if (typeof offset === "undefined") offset = -204;
+    if (typeof offsetY === "undefined") offsetY = -28;
+    if (typeof jitter === "undefined") jitter = 4;
+    if (typeof scaling === "undefined") scaling = 1.2;
     if (scaling > 8) scaling = 8;
     else if (scaling < 0.5) scaling = 0.5;
     scaling = Math.abs(scaling);
@@ -77,7 +77,12 @@ function init(iter, angle, offset, offsetY, jitter, scaling) {
     jitter*=scaling;
     c.width = 384*scaling;
     c.height = 480*scaling;
-    ctx.fillStyle = "white";
+
+    if (!document.getElementById("transparent").checked) {
+	ctx.fillStyle = document.getElementsByClassName("color-input")[1].value;
+	ctx.fillRect(0,0,c.width, c.height);
+    }
+    ctx.fillStyle = document.getElementsByClassName("color-input")[0].value;
     draw(iter,1,offsetY,offset,jitter,c);
     var img = new Image();
     img.src = c.toDataURL();
@@ -173,10 +178,10 @@ function toggleView() {
     }
     if (window.matchMedia("(max-width: 414px)").matches) {
 	if (inputs[0].hidden) {
-	    document.body.style.setProperty("height", "106vh");
+	    document.body.style.setProperty("height", "120vh");
 	}
 	else {
-	    document.body.style.setProperty("height", "125vh");
+	    document.body.style.setProperty("height", "142vh");
 	}
     }
 }
@@ -192,4 +197,9 @@ function save() {
     var link = document.getElementById('link');
     link.setAttribute('download', 'Frequency.png');
     link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+}
+
+function toggleColor() {
+    document.getElementsByClassName("color-input")[1].hidden = document.getElementById("transparent").checked;
+    document.getElementsByClassName("color-input")[1].disabled = document.getElementById("transparent").checked;
 }

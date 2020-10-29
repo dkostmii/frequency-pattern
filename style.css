@@ -43,6 +43,25 @@ body {
     font-size: 8pt;
     padding: 4px 8px;
 }
+.color-input {
+    margin-left: 8px;
+}
+input[type="color"] {
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}
+
+.placeholder {
+    width: 8pt;
+    height: 8pt;
+}
 
 .num-input {
     margin-left: 8px;
@@ -95,7 +114,7 @@ label::selection {
 
 @media screen and (max-width:414px) {
     body {
-	height: 106vh;
+	height: 120vh;
 	flex-direction: column;
 	gap: 24px;
     }

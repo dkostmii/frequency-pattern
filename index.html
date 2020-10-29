@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Frequency pattern</title>
     <link rel="stylesheet" href="style.css">
     <script src="main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,12 +11,16 @@
     <canvas class="image"></canvas>
     <div class="controls">
       <form class="inputs-container" novalidate>
-      <label>Iterations<input type="number" class="num-input" value=1024 ></label>
-      <label>Angle<input type="number" class="num-input" value=22 ></label>
+      <label>Color<input type="color" class="color-input" value="#c4c4c4"></label>
+      <label>Background color<input type="color" class="color-input" disabled hidden></label>
+      <label>Transparent<input type="checkbox" id="transparent" onclick="toggleColor()" checked></label>
+      <div class="placeholder"></div>
+      <label>Iterations<input type="number" class="num-input" value=256 ></label>
+      <label>Angle<input type="number" class="num-input" value=174 ></label>
       <label class="btn-transparent" onclick="toggleView()">Show more</label>
-      <label class="advanced" hidden>Offset<input type="number" class="num-input num-input-small" placeholder="-X" value=32 ><input type="number" placeholder="Y" class="num-input num-input-small" value=0 ></label>
-      <label class="advanced" hidden>Jitter<input type="number" class="num-input" value=2 ></label>
-      <label class="advanced" hidden>Scale<input type="number" id="scale" placeholder="0.5...8" class="num-input" value=1 ></label>
+      <label class="advanced" hidden>Offset<input type="number" class="num-input num-input-small" placeholder="-X" value=-204 ><input type="number" placeholder="Y" class="num-input num-input-small" value=-28 ></label>
+      <label class="advanced" hidden>Jitter<input type="number" class="num-input" value=4 ></label>
+      <label class="advanced" hidden>Scale<input type="number" id="scale" placeholder="0.5...8" class="num-input" value=1.2 ></label>
       <label id="randomize" class="btn-transparent" hidden>Randomize selected</label>
       <label class="btn-transparent" hidden><input type="checkbox" id="redraw" checked>Redraw</label>
       <label class="btn-transparent" onclick="toggleView()" hidden>Show less</label>
